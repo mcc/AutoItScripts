@@ -17,10 +17,12 @@ Gen key pair:
 
 Extract public key pem file (for secure_screenshot)
 >keytool -exportcert -alias screenshot -keypass password -keystore test2.jks -storepass password -rfc -file keytool_crt.pem
+
 >openssl x509 -inform pem -in keytool_crt.pem -pubkey -noout -out test.pem -outform PEM > public.v20160803a.pem
 
 Extract private key as p8 keystore (for secure_viewer)
 >keytool -importkeystore -srckeystore test2.jks -destkeystore intermediate.p12 -deststoretype PKCS12
+
 >openssl pkcs12 -in intermediate.p12 -nodes -nocerts -passin pass:password | openssl rsa | openssl pkcs8 -topk8 -out private.pkcs8
 
 The openssl command that executed in the secure_screenshot, secure_viewer:
